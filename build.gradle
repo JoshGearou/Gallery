@@ -7,6 +7,7 @@ buildscript {
         daggerVersion = "2.27"
         rxjavaVersion = "3.0.3"
         rxAndroidVersion = "3.0.0"
+        glideVersion = "4.11.0"
     }
     repositories {
         google()

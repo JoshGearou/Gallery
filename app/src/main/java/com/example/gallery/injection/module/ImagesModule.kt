@@ -1,10 +1,11 @@
 package com.example.gallery.injection.module
 
+import com.example.gallery.service.ImagesApiService
 import dagger.Module
 import dagger.Provides
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -33,10 +34,15 @@ class ImagesModule {
     @Singleton
     fun provideImagesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.unsplash.com/photos")
+            .baseUrl("https://api.unsplash.com")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
+    }
+
+    @Provides
+    @Singleton fun provideImagesApiService(retrofit: Retrofit): ImagesApiService {
+        return retrofit.create(ImagesApiService::class.java)
     }
 }
