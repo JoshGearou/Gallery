@@ -22,4 +22,11 @@ class ImagesRepository @Inject constructor() {
                 return@map images
             }
     }
+
+    fun getRandomImage(): Single<ImagesData> {
+        return imagesApiService.getRandomImage()
+            .map {
+                return@map ImagesData(it.id, it.description, it.urls?.regular)
+            }
+    }
 }
