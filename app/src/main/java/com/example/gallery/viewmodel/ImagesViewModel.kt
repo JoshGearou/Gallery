@@ -9,21 +9,19 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
-class ImagesViewModel @Inject constructor(val imagesRepository: ImagesRepository) : ViewModel() {
-    val compositeDisposable: CompositeDisposable = CompositeDisposable()
+class ImagesViewModel @Inject constructor(private val imagesRepository: ImagesRepository) : ViewModel() {
     val imageList = MutableLiveData<List<ImagesData>>()
 
     fun getImages() {
-        compositeDisposable.add(
-            imagesRepository.getImages()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    imageList.postValue(it)
-                },
-                    { error ->
-                        println(error)
-                    })
-        )
+        imagesRepository.getImages()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                imageList.postValue(it)
+            },
+                { error ->
+                    println(error)
+                }
+            )
     }
 }
