@@ -11,7 +11,7 @@ class ImagesAdapter(private var data: ArrayList<ImagesData>): RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = holder.item
-        holder.item.layout(0,0,0,0)
+        item.layout(0,0,0,0)
         Glide.with(item.context)
             .load(data[position].url)
             .into(item.iv_image)
